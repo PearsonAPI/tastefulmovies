@@ -68,5 +68,6 @@ def associate():
   else:
     response['results'] = results
 
+  response['query'] = recipe
   return response
 
