@@ -2,6 +2,8 @@ class Glu.RecipeView extends Glu.BaseView
 
   className: 'recipe'
   template: Glu.templates.recipe
+  events:
+    'click .back': 'onClickBack'
 
   initialize: ->
     super()
@@ -44,4 +46,7 @@ class Glu.RecipeView extends Glu.BaseView
     else
       steps.hide()
       movies.show()
+
+  onClickBack: () ->
+    window.location.hash = ''
 
