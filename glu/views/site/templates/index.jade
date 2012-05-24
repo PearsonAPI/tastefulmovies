@@ -1,0 +1,18 @@
+!!! html
+head
+  title glu
+  meta(name="viewport", content="initial-scale=1, maximum-scale=1")
+  meta(name="apple-mobile-web-app-capable", content="yes")
+  link(href=url_for('static', filename='styles/glu.css'), rel='stylesheet')
+body
+  if testing
+    script(src=url_for('static', filename='scripts/zepto.js'))
+    script(src=url_for('static', filename='scripts/underscore.js'))
+    script(src=url_for('static', filename='scripts/backbone.js'))
+    script(src=url_for('static', filename='scripts/jade.js'))
+    script(src=url_for('static', filename='scripts/date.format.js'))
+
+  script(src=url_for('static', filename='scripts/glu.js') + '?' + buster)
+  script 
+    Glu.app = new Glu.GluApp();
+    Glu.app.start();

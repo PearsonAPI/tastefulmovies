@@ -3,6 +3,7 @@
 # Packages
 *.egg
 *.egg-info
+env
 dist
 build
 eggs
@@ -17,6 +18,7 @@ develop-eggs
 pip-log.txt
 
 # Unit test / coverage reports
+test
 .coverage
 .tox
 
@@ -25,3 +27,17 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+.DS_Store*
+node_modules
+flow_api.log
+
+# Editor files
+*.swp
+
+# QR codes
+glu/assets/images/qr_codes/*
+
+# Symlinks
+static
+

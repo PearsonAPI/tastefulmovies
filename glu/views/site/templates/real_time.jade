@@ -1,0 +1,35 @@
+!!! html
+head
+  title glu: real time
+  meta(name="viewport", content="initial-scale=1, maximum-scale=1")
+  meta(name="apple-mobile-web-app-capable", content="yes")
+  link(href=url_for('static', filename='styles/glu.css'), rel='stylesheet')
+body.real-time
+  script(src=url_for('static', filename='scripts/strophe.js'))
+
+  if testing
+    script(src=url_for('static', filename='scripts/zepto.js'))
+    script(src=url_for('static', filename='scripts/underscore.js'))
+    script(src=url_for('static', filename='scripts/backbone.js'))
+    script(src=url_for('static', filename='scripts/jade.js'))
+    script(src=url_for('static', filename='scripts/date.format.js'))
+    script(src=url_for('static', filename='scripts/glu.js') + '?' + buster)
+  else
+    script(src=url_for('static', filename='scripts/glu.js'))
+
+  script
+    Glu.xmpp = new Glu.XmppManager('#{host}');
+    Glu.xmpp.connect({
+      jid: '#{jid}',
+      sid: '#{sid}',
+      rid: '#{rid}'
+    });
+
+    Glu.app = new Glu.RealtimeStreamView({
+      flowId: '#{flow_id}',
+      events: #{events}
+    });
+
+    $(function () {
+      $('body').append(Glu.app.render().el);
+    });

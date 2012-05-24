@@ -1,0 +1,11 @@
+SECRET_KEY = ''
+
+FLOW_API_HOST = 'api.flow.net'
+FLOW_API_PORT = 80
+FLOW_API_KEY = ''
+FLOW_API_SECRET = ''
+
+STATIC_DIR = 'assets'
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379

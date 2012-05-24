@@ -1,0 +1,708 @@
+bd-background = #fffef3 url('../images/texture.png')
+
+
+@import 'nib'
+
+global-reset()
+
+
+*
+  box-sizing border-box
+  -webkit-text-size-adjust none
+
+input, a, button, ul
+  -webkit-tap-highlight-color transparent
+
+html
+  overflow-y scroll
+
+body
+  font 15px/22px sans-serif
+  background bd-background
+
+
+.title-bar
+  background #003f59 linear-gradient(top, #307c9bff, #307c9b00)
+  border-bottom 1px solid #000
+  border-top 1px solid #689fb6
+  fixed top 0, left 0
+  height 44px
+  width 100%
+  z-index 1000
+
+
+#app
+  > .bd
+    margin-top 44px
+
+  > .ft
+    display none
+
+
+.nav
+  text-align center
+
+  li, a
+    display inline-block
+
+  li
+    relative top -1px
+    border-top 1px solid #689fb6
+
+  .vendor-tab
+    display none
+
+  a
+    color #d7d7d7
+    line-height 42px
+    height 42px
+    overflow hidden
+    padding 0 16px 0 46px
+    position relative
+    text-decoration none
+    text-shadow 0 1px 0 #0008
+
+  .icon
+    absolute top 5px left 6px
+    background-image url('../images/nav-sprite.png')
+    background-repeat no-repeat
+    height 37px
+    width 40px
+
+  .events
+    background-position 0 -42px
+
+  .contacts
+    background-position 0 -84px
+
+  .checkins
+    background-position 0 -126px
+
+  .vendor
+    background-position 0 -168px
+
+  li.selected
+    background #013145
+    border-top 1px solid #013145
+    box-shadow inset 0 0 3px #0008
+
+    a
+      color #fff
+
+    .home
+      background-position -40px 0
+
+    .events
+      background-position -40px -42px
+
+    .contacts
+      background-position -40px -84px
+
+    .checkins
+      background-position -40px -126px
+
+    .vendor
+      background-position -40px -168px
+
+.vendor-app
+  .nav
+    .vendor-tab
+      display inline-block
+
+
+//
+// General UI component styles
+// ===========================
+
+.loading
+  fixed top 40% left 50%
+  background #444a
+  border-radius 10px
+  color #fff
+  margin-left -40px
+  text-align center
+  text-shadow 0 1px 0 #000
+  width 80px
+  height 80px
+  z-index 1000
+
+
+.no-results
+  color #888
+  text-align center
+  text-shadow 0 1px 0 #fff
+
+
+.spinner
+  absolute top 50% left 50%
+  width 44px
+  height 44px
+  margin-left -(@width/2)
+  margin-top -(@height/2)
+
+  div
+    absolute top 37% left 44.5%
+    animation fade 1s linear infinite
+    background #fff
+    border-radius 50px
+    box-shadow 0 0 3px #0004
+    height 26%
+    opacity 0
+    width 10%
+
+  for num in 1..12
+    div.bar{num}
+      transform rotate(((num - 1) * 30)deg) translate(0, 142%)
+      animation-delay s('%ss', (-1 + ((num - 1) * (1/12))))
+
+@keyframes fade
+  from
+    opacity 1
+  to
+    opacity .25
+
+
+.group-header
+  color #888
+  font-size 11px
+  font-weight bold
+  margin 0 10px 6px
+  text-shadow 0 1px 0 #fff
+  text-transform uppercase
+
+.group
+  background #fff
+  border 1px solid #acacac
+  border-radius 10px
+  box-shadow 0 1px 0 #fff
+  overflow hidden
+  margin 0 10px 10px
+
+.group-item
+  border-top 1px solid #acacac
+  padding 10px
+  position relative
+
+  &:first-child
+    border-top none
+
+  .loading
+    absolute top 50% right 30px
+    background transparent
+    height 30px
+    left auto
+    margin-top -15px
+    width 30px
+
+    .spinner
+      height 24px
+      margin-left -11px
+      margin-top -11px
+      width 24px
+
+      div
+        background #acacac
+        box-shadow none
+        width 14%
+
+
+.contact-card
+  min-height 68px
+  padding 10px 10px 10px 68px
+  overflow hidden
+
+  .avatar
+    absolute top 10px left 10px
+
+    img
+      border-radius 4px
+      width 48px
+      height 48px
+
+  .name
+    font-weight bold
+    line-height 24px
+
+  p
+    color #444
+    font-size 13px
+    line-height 20px
+
+  b
+    color #acacac
+
+  a
+    color #05a0da
+    text-decoration none
+
+
+.star
+  absolute top 0 left 0
+  background url('../images/star.png') 0 -4px
+  cursor pointer
+  height 40px
+  width 44px
+
+  &.active
+    background-position -44px -4px
+
+
+.tabs
+  text-align center
+
+  li
+    background #fff linear-gradient(top, #fff, #e5e5e5)
+    border 1px solid #acacac
+    color #666
+    cursor pointer
+    display inline-block
+    font-size 13px
+    font-weight bold
+    line-height 28px
+    margin-right -1px
+    text-shadow 0 1px 0 #fff8
+    width 120px
+
+    &:first-child
+      border-radius 6px 0 0 6px
+
+    &:last-child
+      border-radius 0 6px 6px 0
+
+    &.selected
+      background #d5d5d5
+      box-shadow inset 0 1px 1px #0002
+      color #444
+
+
+.arrow
+  transform rotate(135deg)
+  position absolute
+  right 10px
+  top 50%
+
+  &.down
+    margin-top 4px
+    right 16px
+    transform rotate(225deg)
+
+  &.up
+    margin-top -4px
+    transform rotate(45deg)
+
+  &:before
+  &:after
+    content ''
+    position absolute
+    top 0
+    left 0
+    background #acacac
+
+  &:before
+    width 10px
+    height 3px
+
+  &:after
+    width 3px
+    height 10px
+
+
+.event
+  padding 10px 10px 10px 44px
+
+  h4
+    font-weight bold
+    line-height 20px
+
+  p
+    font-size 13px
+    line-height 18px
+
+  .host
+    color #666
+    font-size 11px
+    line-height 16px
+
+  .time
+    absolute top 10px right 10px
+    background-color #05a0da
+    background-image linear-gradient(top, @background-color, darken(@background-color, 10%))
+    border-radius 4px
+    box-shadow 0 1px 1px #0004
+    color #fff
+    display none
+    font-size 11px
+    font-weight bold
+    float right
+    height 20px
+    line-height 20px
+    min-width 60px
+    text-align center
+    text-shadow 0 1px 0 #0004
+
+
+//
+// Section specific styles
+// =======================
+
+.login
+  absolute top 0, left 0
+  width 100%
+
+  > .hd
+    text-align center
+
+    h2
+      background url('../images/glu-logo.png') no-repeat center center
+      height 0
+      overflow hidden
+      padding 42px 0 0 0
+
+  > .bd
+    margin 44px auto 0
+    max-width 320px
+    padding 10px 0
+
+  > .ft
+    color #888
+    font-size 11px
+    line-height 16px
+    margin auto
+    max-width 320px
+    padding 10px
+    text-align center
+
+    a
+      color #666
+
+
+.dashboard
+  > .hd
+    padding 10px 0 0
+
+  > .bd
+    margin auto
+    max-width 640px
+    padding 10px 0
+
+  .card-form
+    margin 0 auto 10px
+    max-width 340px
+
+  .event
+    padding 10px 80px 10px 10px
+
+    .star
+      display none
+
+    .time
+      display block
+
+  .me
+    .email, .work-phone, .mobile-phone, .star, b
+      display none
+
+  .checkin-list
+    display none
+
+
+.events
+  > .hd
+    padding 10px 0 0
+
+  > .bd
+    margin auto
+    max-width 640px
+    padding 10px 0
+
+
+.contacts
+  > .bd
+    margin auto
+    max-width 640px
+    padding 10px 0
+
+  .contact-card
+    .star
+      left auto
+      right 0
+      top 50%
+      margin-top -20px
+
+
+.checkins
+  > .bd
+    margin auto
+    max-width 640px
+    padding 10px 0
+
+.checkin-list
+  .contact-card
+    height 50px
+    min-height 0px
+    padding-left 50px
+
+    .avatar
+      img
+        width 30px
+        height 30px
+
+    .name
+      font-size 13px
+      line-height 18px
+      margin-top -2px
+
+    p
+      font-size 11px
+      line-height 16px
+
+    .company, .mobile-phone, .work-phone, b
+      display none
+
+    .star
+      left auto
+      right 0
+      top 6px
+
+.checkin
+  border-radius 9px 9px 0 0
+  cursor pointer
+  z-index 1
+
+  .opened &
+    background #eee
+    background-image linear-gradient(top, #fff, #ebebeb)
+    box-shadow 0 1px 4px #0004
+
+  .arrow.down, .arrow.up
+    right 22px
+
+  h4
+    font-weight bold
+
+  .time
+    font-size 13px
+    color #666
+
+
+.vendor
+  > .hd
+    padding 10px 0 0
+
+  > .bd
+    margin auto
+    max-width 640px
+    padding 10px 0
+
+  .card-form
+    margin 0 auto 10px
+    max-width 340px
+
+  .contact-card
+    .star
+      left auto
+      right 0
+      top 50%
+      margin-top -20px
+
+
+//
+// Forms
+// =====
+
+.form
+  background #fff
+  border 1px solid #acacac
+  border-radius 10px
+  box-shadow 0 1px 0 #fff
+  margin 0 10px
+
+  input
+    font inherit
+    width 100%
+
+  .button-wrapper
+    padding 10px
+
+.error
+  color red
+
+.input-wrapper
+  background transparent
+  border-bottom 1px solid #acacac
+  color #999
+  display block
+  line-height 38px
+  height 40px
+  padding 0 10px
+  position relative
+
+  &.error
+    color red
+
+  input
+    background transparent
+    border 0
+    line-height 24px
+    height 38px
+    margin 0
+    outline 0
+    padding 7px 0
+    position absolute
+    right 10px
+    width 60%
+
+button
+  background-image linear-gradient(top, #fff4, #fff0)
+  border-width 1px
+  border-radius 6px
+  border-style solid
+  box-shadow inset 0 1px 0 #fff4, 0 1px 1px #0002
+  display block
+  font inherit
+  font-weight bold
+  line-height 38px
+  height 40px
+  margin 0
+  padding 0
+  text-align center
+  text-shadow 0 1px 0 #fff8
+  width 100%
+
+  &:active
+    box-shadow inset 0 1px 3px #0004
+
+  &.attent
+    background-color #c4df9b
+    border-color #598527
+    color #314121
+
+    &:active
+      background-color darken(@background-color, 10%)
+
+//
+// Real-time
+// =========
+
+#realtime-app
+  > .hd
+    text-align center
+
+    h2
+      background url('../images/glu-logo.png') no-repeat center center
+      height 0
+      overflow hidden
+      padding 42px 0 0 0
+
+  > .bd
+    max-width 640px
+    margin 44px auto 0
+    padding 10px 0
+
+    .event
+      padding 10px
+
+  > .ft
+    display none
+
+
+//
+// Phone styles
+// ============
+
+@media (min-device-width: 320px) and (max-device-width: 480px)
+
+  .nav
+    li
+      width 25%
+
+      &:first-child
+        border-left-width 0
+
+      &:last-child
+        border-right-width 0
+
+    a
+      font-size 10px
+      font-weight bold
+      display block
+      padding 12px 0 0
+
+    .icon
+      height 42px
+      left 50%
+      margin-left -20px
+      top 0
+
+
+  .vendor-app .nav
+    li
+      width 20%
+
+
+  .login
+    > .bd
+      max-width 100%
+
+
+  .dashboard
+    .card-form
+      margin 0 10px 10px
+
+
+  .tabs
+    margin-left 10px
+    margin-right 10px
+
+    li
+      width 50%
+
+
+@media (max-device-height: 320px)
+  
+  html, body
+    min-height 220px
+
+
+@media (max-device-height: 480px)
+
+  html, body
+    min-height 372px
+
+
+
+//
+// Retina styles
+// =============
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (min-resolution: 240dpi)
+
+  body
+    background-image url('../images/texture@2x.png')
+    background-size 80px 80px
+  
+  .nav
+    .icon
+      background-image url('../images/nav-sprite@2x.png')
+      background-size 80px 210px
+
+  .login
+    > .hd h2
+      background-image url('../images/glu-logo@2x.png')
+      background-size 50px 42px
+
+  .star
+    background-image url('../images/star@2x.png')
+    background-size 88px 44px
+
+  // Special scrolling for iphones that can handle it
+  //.ios
+  //  #app > .hd
+  //    position absolute
+
+  //  .events > .bd
+  //    overflow scroll
+  //    position absolute
+  //    top 44px
+  //    height 372px
+  //    -webkit-overflow-scrolling touch

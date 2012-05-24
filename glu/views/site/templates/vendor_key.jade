@@ -1,0 +1,35 @@
+!!! html
+head
+  title #{vendor_alias}
+  style
+    html, body {
+      height:100%;
+      margin:0;
+      padding:0;
+    }
+
+    .wrapper {
+      display:table;
+      width:100%;
+      height:100%;
+      margin:0 auto;
+      padding:0;
+    }
+
+    .wrapper div {
+      display:table-cell;
+      margin:0;
+      text-align:center;
+      vertical-align:middle;
+    }
+
+    .wrapper div p {
+      font-family:sans-serif;
+    }
+body
+  div.wrapper
+    div
+      p Keep the following key confidential amongst your booth staff:
+      p
+        code #{vendor_key}
+      p To associate a user account with your company, add this key to the user's virtual card.
