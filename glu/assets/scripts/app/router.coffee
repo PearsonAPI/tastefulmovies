@@ -26,7 +26,6 @@ class Glu.GluApp extends Backbone.Router
     Backbone.history.start()
 
   search: ->
-    console.log 'search'
     @view.searchView.show()
     @view.recipeView.hide()
 
