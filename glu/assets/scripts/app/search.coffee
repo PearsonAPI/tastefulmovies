@@ -27,13 +27,15 @@ class Glu.SearchView extends Glu.BaseView
 
   getRecipes: ->
     return this.$('.results').remove() unless @ingredients.length
-    $.get '/api/search', {q: @ingredients.join ''}, (err, resp) =>
+    $.get '/api/search', {q: @ingredients.join ','}, (err, resp) =>
       this.$el.children('.bd').html Glu.templates.results(results: resp.results)
 
   onKeyPress: _.throttle (e) ->
     query = $(e.currentTarget).val()
-    if query && e.keyCode == 13
-      @renderIngredients [query]
+    if query && e.keyCode == 13 and query not in @ingredients
+      this.$('.ingredient-choices ul').prepend Glu.templates['ingredient-choice']({name:query})
+      @ingredients.push name
+      @getRecipes()
 
   onInput: _.throttle (e) ->
     query = $(e.currentTarget).val()
