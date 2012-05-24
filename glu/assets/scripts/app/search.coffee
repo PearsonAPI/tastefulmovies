@@ -56,7 +56,8 @@ class Glu.SearchView extends Glu.BaseView
     name = $(e.currentTarget).data 'name'
     $(e.currentTarget).closest('li').remove()
     @ingredients = _.without @ingredients, name
-    @getRecipes()
+    if @ingredients.length then @getRecipes()
+    else this.$('.results').remove()
 
   onSelectRecipe: (e) ->
     id = $(e.currentTarget).data 'id'
