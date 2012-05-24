@@ -11,6 +11,7 @@ import string
 import urllib
 import httplib
 import json
+import oauth.oauth as oauth
 
 
 ########################################
@@ -87,28 +88,20 @@ def session_contains(*members):
 ########################################
 
 def netflix(endpoint, params=None, method='GET'):
+  NETFLIX_KEY = current_app.config['NETFLIX_KEY']
+  NETFLIX_SECRET = current_app.config['NETFLIX_SECRET']
+
   url = 'http://api.netflix.com' + endpoint
-  params.update({
-    'oauth_consumer_key': current_app.config['NETFLIX_KEY'],
-    'oauth_nonce': ''.join([random.choice(string.letters + string.digits) for x in xrange(20)]),
-    'oauth_signature_method': 'HMAC-SHA1',
-    'timestamp': int(time.time() * 1000),
-    'output': 'json',
-    })
 
-  sig = hashlib.sha1()
-  sig.update(current_app.config['NETFLIX_KEY'])
-  sig.update(current_app.config['NETFLIX_SECRET'])
-  sig.update('%s&%s&%s' % (
-    method,
-    urllib.quote_plus(url),
-    urllib.quote_plus(urllib.urlencode(sorted(params.items(), key=lambda x: x[0])))
-    ))
+  if params is None: params = {}
+  params.update({'output': 'json'})
 
-  params['oauth_signature'] = sig.hexdigest()
+  consumer = oauth.OAuthConsumer(NETFLIX_KEY, NETFLIX_SECRET)
+  req = oauth.OAuthRequest.from_consumer_and_token(consumer, http_url=url, parameters=params, token=None)
+  req.sign_request(oauth.OAuthSignatureMethod_HMAC_SHA1(), consumer, None)
 
   conn = httplib.HTTPConnection('api.netflix.com')
-  conn.request(method, '%s?%s' % (endpoint, urllib.urlencode(params)))
+  conn.request(method, req.to_url())
   resp = conn.getresponse().read()
 
   return json.loads(resp)
