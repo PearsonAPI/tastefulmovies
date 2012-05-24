@@ -4,10 +4,10 @@ from glu import cache
 from . import helpers
 from . import api
 
-import hashlib
 import json
 import time
 import nltk
+import urllib
 
 @api.route('/autocomplete')
 @helpers.jsonify
@@ -48,25 +48,29 @@ def associate():
   if not query:
     return response
 
-  recipe = json.loads(cache.get('rcp:%s' % query))
+  serialized_recipe = cache.get('rcp:%s' % query)
 
-  if not recipe: 
+  if not serialized_recipe:
     return response
 
+  partial_recipe = json.loads(serialized_recipe)
+  full_recipe = json.loads(urllib.urlopen(partial_recipe['url']).read())
+
   stopwords = set(nltk.corpus.stopwords.words('english'))
-  tokens = nltk.tokenize.word_tokenize(recipe['name'])
-  tokens.append(recipe['cuisine'])
+  tokens = nltk.tokenize.word_tokenize(full_recipe['name'])
+
+  if full_recipe['cuisine'] != 'N/A':
+    tokens.append(full_recipe['cuisine'])
+
   tokens = [word.lower() for word in tokens if not word in stopwords] 
-  results = helpers.netflix('/catalog/titles', {'term': '|'.join(tokens)})
+  results = helpers.netflix('/catalog/titles', {'term': ' '.join(tokens)})
 
   if 'catalog_titles' in results and 'catalog_title' in results['catalog_titles']:
     results = filter(lambda x: 'average_rating' in x, results['catalog_titles']['catalog_title'])
-    #results = sorted(results, key=lambda x: x['average_rating'])
-    #results.reverse()
     response['results'] = results
   else:
     response['results'] = results
 
-  response['query'] = recipe
+  response['query'] = full_recipe
   return response
 

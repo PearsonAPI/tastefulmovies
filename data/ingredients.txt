@@ -19,7 +19,7 @@ Olive Oil
 Parsley
 Tomato Sauce
 Honey
-Bananas
+Banana
 Nutmeg
 Syrup
 Soy Sauce
@@ -69,7 +69,7 @@ Potatoes
 Egg Noodles
 Butter
 Tomato
-Portabello Mushroom
+Mushrooms
 Lamb
 Shrimp
 Scallops
