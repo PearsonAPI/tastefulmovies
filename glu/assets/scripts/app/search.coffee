@@ -34,7 +34,8 @@ class Glu.SearchView extends Glu.BaseView
     query = $(e.currentTarget).val()
     if query && e.keyCode == 13 and query not in @ingredients
       this.$('.ingredient-choices ul').prepend Glu.templates['ingredient-choice']({name:query})
-      @ingredients.push name
+      @ingredients.push query
+      @clearResults()
       @getRecipes()
 
   onInput: _.throttle (e) ->
