@@ -2,7 +2,13 @@
   if !results.length
     .no-results No matching recipes
   else
-    each recipe in results
-      .recipe-result(data-id=recipe.id)
-        h3= recipe.name
-        p= recipe.cuisine
+    .result-group.group
+      each recipe in results
+        .recipe-result.group-item(data-id=recipe.id)
+          if recipe.image
+            img.image(src=recipe.image, width=45, height=45)
+          else
+            .no-image
+          h3= recipe.name
+          p= recipe.cuisine
+          .arrow
