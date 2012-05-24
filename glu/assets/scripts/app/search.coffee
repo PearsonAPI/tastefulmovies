@@ -27,7 +27,9 @@ class Glu.SearchView extends Glu.BaseView
 
   getRecipes: ->
     return this.$('.results').remove() unless @ingredients.length
+    @loading on
     $.get '/api/search', {q: @ingredients.join ','}, (err, resp) =>
+      @loading off
       this.$el.children('.bd').html Glu.templates.results(results: resp.results)
 
   onKeyPress: _.throttle (e) ->
