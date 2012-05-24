@@ -63,7 +63,7 @@ def associate():
     tokens.append(full_recipe['cuisine'])
 
   tokens = [word.lower() for word in tokens if not word in stopwords] 
-  results = helpers.netflix('/catalog/titles', {'term': ' '.join(tokens)})
+  results = helpers.netflix('/catalog/titles', {'term': ' '.join(tokens), 'expand': 'short synopsis'})
 
   if 'catalog_titles' in results and 'catalog_title' in results['catalog_titles']:
     results = filter(lambda x: 'average_rating' in x, results['catalog_titles']['catalog_title'])
