@@ -14,12 +14,6 @@ class Glu.SearchView extends Glu.BaseView
   initialize: ->
     super()
     @ingredients = []
-    @recipeView = (new Glu.RecipeView).hide()
-
-  render: ->
-    super()
-    this.$('.bd').append(@recipeView.el)
-    return this
 
   renderIngredients: (ingredients) ->
     html = (Glu.templates['ingredient-result'] name:i for i in ingredients).join ''
@@ -57,5 +51,4 @@ class Glu.SearchView extends Glu.BaseView
 
   onSelectRecipe: (e) ->
     id = $(e.currentTarget).data 'id'
-    $.get '/api/associate', {q: id}, (err, resp) =>
-      
+    window.location.hash = "recipe/" + id

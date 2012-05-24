@@ -11,8 +11,38 @@ class Glu.RecipeView extends Glu.BaseView
       {'id': 'movies', label: 'Movies'}
     ])
 
+    @tabView.on 'select', @onTabSelect
+
   render: ->
-    this.$el.html @template(recipe: @recipe)
-    this.$el.children('.bd').prepend @tabView.render().select('recipe').el
+    this.$el.html @template(recipe: @recipe, movies: @movies)
+    this.$el.children('.bd').prepend @tabView.render().select('recipe').el if @recipe
 
     return this
+
+  load: (id) ->
+    @loading on
+    $.get '/api/associate', {q: id}, (err, resp) =>
+      @loading off
+      @recipe = resp.query
+      @movies = resp.results
+      console.log @recipe
+      @render()
+
+    return this
+
+  hide: ->
+    @recipe = null
+    @movies = null
+    super()
+
+  onTabSelect: (tab) =>
+    steps = this.$('.recipe-steps')
+    movies = this.$('.movies')
+
+    if tab == 'recipe'
+      steps.show()
+      movies.hide()
+    else
+      steps.hide()
+      movies.show()
+

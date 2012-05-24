@@ -1,6 +1,26 @@
-.hd
-  h2= recipe.name
+.hd.title-bar
+  if recipe
+    h1= recipe.name
 
 .bd
-  .recipe-steps
-  .movies
+  if recipe
+    .recipe-steps
+      if recipe.image
+        .image
+          img(src=recipe.image)
+
+      ul.group
+        each i in recipe.ingredients
+         li.group-item
+           .prep
+             = i.quantity
+             |  
+             = i.unit
+             if i.preparation
+               |  
+               = i.preparation
+            = i.name
+      ol
+        each d in recipe.directions
+          li= d
+    .movies

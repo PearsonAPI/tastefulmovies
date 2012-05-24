@@ -8,7 +8,8 @@ class Glu.GluApp extends Backbone.Router
   initialized = false
 
   routes:
-    'title/:id' : 'viewTitle'
+    '' : 'search'
+    'recipe/:id' : 'viewRecipe'
   
   initialize: ->
     @view = null
@@ -24,5 +25,11 @@ class Glu.GluApp extends Backbone.Router
     # Start history monitoring
     Backbone.history.start()
 
-  viewTitle: (id) ->
-    return
+  search: ->
+    console.log 'search'
+    @view.searchView.show()
+    @view.recipeView.hide()
+
+  viewRecipe: (id) ->
+    @view.recipeView.show().load(id)
+    @view.searchView.hide()
