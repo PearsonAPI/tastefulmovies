@@ -5,6 +5,7 @@ class Glu.SearchView extends Glu.BaseView
 
   events: ->
     events =
+      'keypress .search-input': 'onKeyPress'
       'input .search-input': 'onInput'
       'click .add': 'onSelectIngredient'
       'click .remove': 'onRemoveIngredient'
@@ -29,12 +30,17 @@ class Glu.SearchView extends Glu.BaseView
     $.get '/api/search', {q: @ingredients.join ''}, (err, resp) =>
       this.$el.children('.bd').html Glu.templates.results(results: resp.results)
 
+  onKeyPress: _.throttle (e) ->
+    query = $(e.currentTarget).val()
+    if query && e.keyCode == 13
+      @renderIngredients [query]
+
   onInput: _.throttle (e) ->
     query = $(e.currentTarget).val()
     return @clearResults() unless query
     $.get '/api/autocomplete', {q: query}, (err, resp) =>
       @renderIngredients (r for r in resp.results when r not in @ingredients)[0...5]
-  , 400
+    , 400
 
   onSelectIngredient: (e) ->
     name = $(e.currentTarget).data 'name'
