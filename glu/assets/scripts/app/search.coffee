@@ -8,11 +8,18 @@ class Glu.SearchView extends Glu.BaseView
       'input .search-input': 'onInput'
       'click .add': 'onSelectIngredient'
       'click .remove': 'onRemoveIngredient'
+      'click .recipe-result': 'onSelectRecipe'
     return events
 
   initialize: ->
     super()
     @ingredients = []
+    @recipeView = (new Glu.RecipeView).hide()
+
+  render: ->
+    super()
+    this.$('.bd').append(@recipeView.el)
+    return this
 
   renderIngredients: (ingredients) ->
     html = (Glu.templates['ingredient-result'] name:i for i in ingredients).join ''
@@ -24,7 +31,9 @@ class Glu.SearchView extends Glu.BaseView
     this.$('.search-input').get(0).select()
 
   getRecipes: ->
-    console.log @ingredients.join(',')
+    return this.$('.results').remove() unless @ingredients.length
+    $.get '/api/search', {q: @ingredients.join ''}, (err, resp) =>
+      this.$el.children('.bd').html Glu.templates.results(results: resp.results)
 
   onInput: _.throttle (e) ->
     query = $(e.currentTarget).val()
@@ -45,3 +54,8 @@ class Glu.SearchView extends Glu.BaseView
     $(e.currentTarget).closest('li').remove()
     @ingredients = _.without @ingredients, name
     @getRecipes()
+
+  onSelectRecipe: (e) ->
+    id = $(e.currentTarget).data 'id'
+    $.get '/api/associate', {q: id}, (err, resp) =>
+      

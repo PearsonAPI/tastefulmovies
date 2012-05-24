@@ -1,0 +1,8 @@
+.results
+  if !results.length
+    .no-results No matching recipes
+  else
+    each recipe in results
+      .recipe-result(data-id=recipe.id)
+        h3= recipe.name
+        p= recipe.cuisine
