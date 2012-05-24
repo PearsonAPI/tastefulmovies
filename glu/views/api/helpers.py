@@ -9,6 +9,7 @@ import time
 import random
 import string
 import urllib
+import urlparse
 import httplib
 import json
 import oauth.oauth as oauth
@@ -82,7 +83,25 @@ def session_contains(*members):
     return apply
   return decorator
 
+########################################
+# Pearson
+########################################
 
+def pearson(*ingredients):
+  ingredients = [ingredient.lower().replace(' ', '+') for ingredient in list(ingredients)]
+
+  PEARSON_HOST = current_app.config['PEARSON_HOST']
+  PEARSON_PORT = current_app.config['PEARSON_PORT']
+  PEARSON_PATH = current_app.config['PEARSON_PATH']
+  PEARSON_KEY  = current_app.config['PEARSON_KEY']
+
+  conn = httplib.HTTPConnection('%s:%s' % (PEARSON_HOST, PEARSON_PORT))
+  headers = {'Accept': 'application/json'}
+  query = {'ingredients-any': ','.join(ingredients), 'apikey': PEARSON_KEY}
+  conn.request('GET', '%s?%s' % (PEARSON_PATH, urllib.urlencode(query)), None, headers)
+  response = conn.getresponse().read()
+  return json.loads(response)
+ 
 ########################################
 # Netflix
 ########################################

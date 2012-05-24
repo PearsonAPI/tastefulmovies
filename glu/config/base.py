@@ -1,11 +1,10 @@
 SECRET_KEY = ''
 
-FLOW_API_HOST = 'api.flow.net'
-FLOW_API_PORT = 80
-FLOW_API_KEY = ''
-FLOW_API_SECRET = ''
-
 STATIC_DIR = 'assets'
+
+PEARSON_HOST = 'api.pearson.com'
+PEARSON_PORT = 80
+PEARSON_PATH = '/kitchen-manager/v1/recipes'
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
