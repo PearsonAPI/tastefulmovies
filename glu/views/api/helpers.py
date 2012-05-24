@@ -135,7 +135,7 @@ def autocomplete(prefix, count):
   rangelen = 50
   start = cache.zrank(KEY, prefix)
 
-  if not prefix:
+  if not prefix or start is None:
     return results
 
   while len(results) <= count:
