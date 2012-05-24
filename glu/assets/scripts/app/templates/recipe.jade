@@ -1,4 +1,6 @@
 .hd.title-bar
+  button.back
+    | Back
   if recipe
     h1= recipe.name
 
@@ -23,4 +25,18 @@
       ol
         each d in recipe.directions
           li= d
+
     .movies
+      .group
+        each m in movies
+          .group-item.movie
+            img(src=m.box_art.small)
+            h4
+              = m.title.regular
+              span.rating
+                - var rating = Math.floor(m.average_rating || 0)
+                while rating--
+                  | ★
+                
+            p
+              != m.link[0].synopsis

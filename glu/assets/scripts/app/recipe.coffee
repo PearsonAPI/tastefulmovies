@@ -24,8 +24,7 @@ class Glu.RecipeView extends Glu.BaseView
     $.get '/api/associate', {q: id}, (err, resp) =>
       @loading off
       @recipe = resp.query
-      @movies = resp.results
-      console.log @recipe
+      @movies = resp.results[0...5]
       @render()
 
     return this
