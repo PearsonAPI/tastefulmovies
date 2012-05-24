@@ -6,6 +6,7 @@ APP_FILES = \
 	models.coffee \
 	app.coffee \
 	router.coffee \
+	search.coffee \
 	main.coffee \
 
 APP_DEPS = \
