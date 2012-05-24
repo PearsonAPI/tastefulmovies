@@ -25,6 +25,7 @@ Syrup
 Soy Sauce
 Eggs
 Cola
+Soda
 Coffee
 Wheat Bread
 Tuna
@@ -77,3 +78,5 @@ Avocado
 Broccoli
 Romaine Lettuce
 Spinach
+Strawberries
+Chocolate
