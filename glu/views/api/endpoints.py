@@ -43,7 +43,7 @@ def search():
 @helpers.jsonify
 def associate():
   query = request.args.get('q', None)
-  response = {'results': [], 'recipe': None}
+  response = {'results': []}
 
   if not query:
     return response
@@ -53,7 +53,6 @@ def associate():
   if not recipe: 
     return response
 
-  response['recipe'] = recipe
   stopwords = set(nltk.corpus.stopwords.words('english'))
   tokens = nltk.tokenize.word_tokenize(recipe['name'])
   tokens.append(recipe['cuisine'])
