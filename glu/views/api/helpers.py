@@ -9,7 +9,6 @@ import time
 import random
 import string
 import urllib
-import urlparse
 import httplib
 import json
 

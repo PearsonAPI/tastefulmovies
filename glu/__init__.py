@@ -35,3 +35,16 @@ def create_app(config=None):
   app.register_blueprint(api, url_prefix='/api')
 
   return app
+
+def bootstrap_app(app, delete_existing=False):
+  print 'Bootstrapping application [%s]..' % app
+
+  if delete_existing:
+    cache.flushdb()
+
+  with open('data/ingredients.txt') as f:  
+    for line in f:
+      cache.set('ing:%s' % line)
+
+  print 'Bootstrap complete'
+
