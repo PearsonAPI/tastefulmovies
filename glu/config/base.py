@@ -1,4 +1,4 @@
-SECRET_KEY = ''
+SECRET_KEY = 'horsecock'
 
 STATIC_DIR = 'assets'
 

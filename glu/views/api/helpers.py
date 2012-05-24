@@ -123,3 +123,36 @@ def netflix(endpoint, params=None, method='GET'):
   resp = conn.getresponse().read()
 
   return json.loads(resp)
+
+########################################
+# Autocomplete
+########################################
+
+def autocomplete(prefix, count):
+  KEY = 'ing'
+
+  results = []
+  rangelen = 50
+  start = cache.zrank(KEY, prefix)
+
+  if not prefix:
+    return results
+
+  while len(results) <= count:
+    range = cache.zrange(KEY, start, start + rangelen - 1)
+    start += rangelen
+
+    if not range or len(range) == 0:
+      break
+
+    for entry in range:
+      minlen = min((len(entry), len(prefix)))
+
+      if entry[0:minlen] != prefix[0:minlen]:
+        count = len(results)
+        break
+
+      if entry[-1] == '*' and len(results) != count:
+        results.append(entry[0:-1])
+
+  return results

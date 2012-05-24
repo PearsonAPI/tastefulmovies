@@ -42,9 +42,16 @@ def bootstrap_app(app, delete_existing=False):
   if delete_existing:
     cache.flushdb()
 
-  with open('data/ingredients.txt') as f:  
-    for line in f:
-      cache.set('ing:%s' % line)
+  KEY = 'ing'
+
+  for line in open('data/ingredients.txt').readlines():
+    line = line.strip().lower()
+
+    for end_index in range(1, len(line)):
+      prefix = line[0:end_index]
+      cache.zadd(KEY, prefix, 0)
+
+    cache.zadd(KEY, line + '*', 0)
 
   print 'Bootstrap complete'
 
