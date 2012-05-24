@@ -733,3 +733,34 @@ button
     &:focus
       outline 0
       border-color #666
+
+  .add, .remove
+    float right
+    clear right
+    margin -1px 0 0
+    padding 0 6px
+    background-image linear-gradient(top, #fff2, #fff0)
+    border-radius 16px
+    border 1px solid #eee
+    text-shadow 0 1px 0 #0008
+    font-family monospace
+    color white
+    cursor pointer
+
+  .ingredient-results, .ingredient-choices
+    li
+      padding 4px 0
+
+      &:last-child
+        margin-bottom: 10px
+
+    li + li
+      border-top: 1px solid #ccc
+
+  .ingredient-results
+    .add
+      background-color green
+
+  .ingredient-choices
+    .remove
+      background-color orange
